@@ -1,4 +1,4 @@
-package com.mada.expensetracker.expensetracker;
+package com.mada.expensetracker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

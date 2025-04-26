@@ -1,6 +1,6 @@
-package com.mada.expensetracker.expensetracker.repository;
+package com.mada.expensetracker.repository;
 
-import com.mada.expensetracker.expensetracker.entity.Expense;
+import com.mada.expensetracker.entity.Expense;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;

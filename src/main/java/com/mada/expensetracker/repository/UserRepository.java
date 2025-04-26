@@ -1,6 +1,6 @@
-package com.mada.expensetracker.expensetracker.repository;
+package com.mada.expensetracker.repository;
 
-import com.mada.expensetracker.expensetracker.entity.User;
+import com.mada.expensetracker.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package com.mada.expensetracker.expensetracker.entity;
+package com.mada.expensetracker.entity;
 
 import java.time.LocalDate;
 
