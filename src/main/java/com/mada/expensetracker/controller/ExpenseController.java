@@ -1,13 +1,17 @@
 package com.mada.expensetracker.controller;
 
+import java.util.List;
+
 import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mada.expensetracker.dto.ExpenseRequest;
+import com.mada.expensetracker.dto.ExpenseResponse;
 import com.mada.expensetracker.service.ExpenseService;
 
 @RestController
@@ -25,4 +29,20 @@ public class ExpenseController {
         System.out.println("Creating an expense");
         expenseService.createExpense(request, userEmail);
     }
+
+    @GetMapping("")
+    public List<ExpenseResponse> getAllExpenses() {
+        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println("Fetching all expenses");
+        return expenseService.getAllExpenses(userEmail);
+    }
+
+    /* 
+    @GetMapping("/{id}")
+    public ExpenseResponse getExpense(@PathVariable Long id) {
+        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println("Fetching expense " + id);
+        return expenseService.getExpense(userEmail);
+    }
+    */
 }
