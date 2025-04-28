@@ -1,5 +1,7 @@
 package com.mada.expensetracker.service;
 
+import java.util.Optional;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,12 @@ public class AuthService {
 
     // Register a new user, hash password, save to database
     public void register(RegisterRequest request) {
+        Optional<User> userExists = userRepository.findByEmail(request.email());
+
+        if (userExists.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account already exists");
+        }
+
         User newUser = new User();
         newUser.setEmail(request.email());
         newUser.setPassword(passwordEncoder.encode(request.password()));
