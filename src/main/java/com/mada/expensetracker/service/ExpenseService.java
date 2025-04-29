@@ -86,7 +86,7 @@ public class ExpenseService {
             expense.getDate());
     }
 
-    // Deletes a specific expense from a user
+    // Deletes a specific expense from a user7
     public void deleteExpense(String email, Long expenseId) {
         User user = userRepository.findByEmail(email)
             .orElseThrow(() -> new UsernameNotFoundException("User not found"));
@@ -101,5 +101,28 @@ public class ExpenseService {
         expenseRepository.delete(expense);
 
         System.out.println("Expense deleted successfully");
+    }
+
+    // Updates an existing expense
+    public void updateExpense(String email, ExpenseRequest request, Long expenseId) {
+        User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        Expense expense = expenseRepository.findById(expenseId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Expense not found"));
+        
+        if (!expense.getUser().getId().equals(user.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to edit this expense");
+        }
+
+        expense.setName(request.name());
+        expense.setAmount(request.amount());
+        expense.setDescription(request.description());
+        expense.setCategory(request.category());
+        expense.setDate(request.date());
+
+        expenseRepository.save(expense);
+
+        System.out.println("Expense updated successfully");
     }
 }
