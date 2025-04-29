@@ -37,12 +37,10 @@ public class ExpenseController {
         return expenseService.getAllExpenses(userEmail);
     }
 
-    /* 
-    @GetMapping("/{id}")
-    public ExpenseResponse getExpense(@PathVariable Long id) {
+    @GetMapping("/{expenseId}")
+    public ExpenseResponse getExpense(@PathVariable Long expenseId) {
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-        System.out.println("Fetching expense " + id);
-        return expenseService.getExpense(userEmail);
+        System.out.println("Fetching expense " + expenseId);
+        return expenseService.getExpense(userEmail, expenseId);
     }
-    */
 }

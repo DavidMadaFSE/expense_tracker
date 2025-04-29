@@ -23,7 +23,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 60000))
+                .setExpiration(new Date(System.currentTimeMillis() + (60000 * 30)))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
