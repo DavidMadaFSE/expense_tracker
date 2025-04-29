@@ -1,6 +1,5 @@
 package com.mada.expensetracker.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -28,7 +27,7 @@ public class ExpenseService {
     // Creates an expense for the given user
     public void createExpense(ExpenseRequest request, String email) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User was not found."));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found."));
 
         Expense expense = new Expense();
 
@@ -47,7 +46,7 @@ public class ExpenseService {
     // Gets all expenses from a user
     public List<ExpenseResponse> getAllExpenses(String email) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User was not found."));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found."));
 
         List<Expense> expenses = expenseRepository.findByUser(user);
 
@@ -69,7 +68,7 @@ public class ExpenseService {
     // Get a specific expense from a user
     public ExpenseResponse getExpense(String email, Long expenseId) {
         User user = userRepository.findByEmail(email)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found"));
+            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         
         Expense expense = expenseRepository.findById(expenseId)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Expense not found"));
@@ -85,5 +84,22 @@ public class ExpenseService {
             expense.getDescription(),
             expense.getCategory(),
             expense.getDate());
+    }
+
+    // Deletes a specific expense from a user
+    public void deleteExpense(String email, Long expenseId) {
+        User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        
+        Expense expense = expenseRepository.findById(expenseId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Expense not found"));
+        
+        if (!expense.getUser().getId().equals(user.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to delete this expense");
+        }
+
+        expenseRepository.delete(expense);
+
+        System.out.println("Expense deleted successfully");
     }
 }
