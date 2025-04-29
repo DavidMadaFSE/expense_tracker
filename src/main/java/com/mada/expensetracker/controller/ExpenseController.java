@@ -3,6 +3,7 @@ package com.mada.expensetracker.controller;
 import java.util.List;
 
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,5 +43,12 @@ public class ExpenseController {
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         System.out.println("Fetching expense " + expenseId);
         return expenseService.getExpense(userEmail, expenseId);
+    }
+
+    @DeleteMapping("/delete/{expenseId}")
+    public void deleteExpense(@PathVariable Long expenseId) {
+        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println("Deleteing expense " + expenseId);
+        expenseService.deleteExpense(userEmail, expenseId);
     }
 }
