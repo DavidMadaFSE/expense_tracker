@@ -1,9 +1,11 @@
+import "../App.css";
 import { useState } from "react";
 import axios from "axios";
 
 function Login({ onLoginSuccess }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState(false);
 
     // Trys to login the user with the given credentials
     const handleLogin = async (e) => {
@@ -16,10 +18,11 @@ function Login({ onLoginSuccess }) {
             });
 
             localStorage.setItem('token', response.data.token);
+            setErrorMessage(false);
             onLoginSuccess();
-
         } catch (error) {
             console.log("Error: " + error);
+            setErrorMessage(true);
         }
     }
 
@@ -45,6 +48,7 @@ function Login({ onLoginSuccess }) {
                 <br/>
                 <button type="submit">Submit</button>
             </form>
+            {errorMessage && <h2 className="Error">Invalid credentials</h2>}
         </div>
     );
 }
