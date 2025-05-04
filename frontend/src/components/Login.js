@@ -1,11 +1,15 @@
 import "../App.css";
 import { useState } from "react";
 import axios from "axios";
+import { Link,
+    useNavigate,
+ } from "react-router-dom";
 
-function Login({ onLoginSuccess }) {
+function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState(false);
+    const navigate = useNavigate();
 
     // Trys to login the user with the given credentials
     const handleLogin = async (e) => {
@@ -19,7 +23,7 @@ function Login({ onLoginSuccess }) {
 
             localStorage.setItem('token', response.data.token);
             setErrorMessage(false);
-            onLoginSuccess();
+            navigate('/');
         } catch (error) {
             console.log("Error: " + error);
             setErrorMessage(true);
@@ -49,6 +53,7 @@ function Login({ onLoginSuccess }) {
                 <button type="submit">Submit</button>
             </form>
             {errorMessage && <h2 className="Error">Invalid credentials</h2>}
+            <p>Don't have an account? <Link to='register'>Sign up</Link></p>
         </div>
     );
 }

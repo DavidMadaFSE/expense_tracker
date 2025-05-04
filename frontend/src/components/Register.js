@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function Register({ onRegisterSuccess }) {
     const [email, setEmail] = useState("");
@@ -67,6 +68,7 @@ function Register({ onRegisterSuccess }) {
                 <br/>
                 <button type="submit">Submit</button>
             </form>
+            <p>Already have an account? <Link to='/'>Sign in</Link></p>
         </div>
     );
 }
