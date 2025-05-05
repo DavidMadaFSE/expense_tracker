@@ -23,7 +23,7 @@ function Login() {
 
             localStorage.setItem('token', response.data.token);
             setErrorMessage(false);
-            navigate('/');
+            navigate('/expenses');
         } catch (error) {
             console.log("Error: " + error);
             setErrorMessage(true);

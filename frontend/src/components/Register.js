@@ -1,12 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-function Register({ onRegisterSuccess }) {
+function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordSame, setPasswordSame] = useState("");
     const [fullName, setFullName] = useState("");
+    const navigate = useNavigate();
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -24,7 +25,7 @@ function Register({ onRegisterSuccess }) {
             });
             console.log("Created Account");
             console.log("Response: " + response);
-            onRegisterSuccess();
+            navigate('/');
         } catch (error) {
             console.log("Error: " + error);
         }

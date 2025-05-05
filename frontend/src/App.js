@@ -2,6 +2,7 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Expenses from "./components/Expenses";
 import {
   BrowserRouter as Router,
   Routes,
@@ -22,7 +23,8 @@ function App() {
         <h2>Expense Tracker Application</h2>
         <Routes>
           <Route path='/' element={<Login />} />
-          <Route path='register' element={<Register />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/expenses' element={<Expenses />} />
         </Routes>
       </div>
     </Router>
