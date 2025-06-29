@@ -12,16 +12,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "expense")
-public class Expense {
+@Table(name = "budget")
+public class Budget {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
     private Double amount;
-    private String description;
-    private String category;
     private LocalDate date;
 
     @ManyToOne

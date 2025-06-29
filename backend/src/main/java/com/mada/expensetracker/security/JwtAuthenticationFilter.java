@@ -26,15 +26,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.customUserDetails = customUserDetails;
     }
 
+    @Override
     protected void doFilterInternal(HttpServletRequest request,
             HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
+                System.out.println(">>> JwtAuthenticationFilter triggered");
 
                 String authHeader = request.getHeader("Authorization");
 
                 System.out.println("Auth Header: " + authHeader);
+                System.out.println("SecurityContext Auth: " + SecurityContextHolder.getContext().getAuthentication());
                 
-                if (authHeader != null && authHeader.startsWith("Bearer")) {
+                if (authHeader != null && authHeader.startsWith("Bearer ")) {
                     String token = authHeader.substring(7);
                     String email = jwtUtil.extractUsername(token);
 
