@@ -1,5 +1,7 @@
 package com.mada.expensetracker.controller;
 
+import java.util.List;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +40,13 @@ public class BudgetController {
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         System.out.println("Fetching budget");
         return budgetService.getBudget(budgetId, userEmail);
+    }
+
+    @GetMapping("")
+    public List<BudgetResponse> getAllBudgets() {
+        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println("Fetching all budgets");
+        return budgetService.getAllBudgets(userEmail);
     }
 
 }

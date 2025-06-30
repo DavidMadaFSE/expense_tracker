@@ -75,4 +75,23 @@ public class BudgetService {
             budget.getDate());
     }
 
+    // Gets all budgets
+    public List<BudgetResponse> getAllBudgets(String email) {
+        User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found"));
+        
+        List<Budget> budgets = budgetRepository.findByUserId(user.getId());
+
+        List<BudgetResponse> response = budgets.stream()
+            .map(budget -> new BudgetResponse(
+                    budget.getId(),
+                    budget.getAmount(),
+                    budget.getDate()
+            )).toList();
+
+        System.out.println("All budgets reetrieved");
+
+        return response;
+    }
+
 }
