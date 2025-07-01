@@ -1,6 +1,7 @@
 package com.mada.expensetracker.service;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -61,6 +62,36 @@ public class ExpenseService {
                 .toList();
 
         System.out.println("All expenses retrieved");
+
+        return response;
+    }
+
+    public List<ExpenseResponse> getExpensesByDate(String email, int month, int year) {
+        User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        LocalDate startDate = LocalDate.of(year, month, 1);
+        int nextMonth = month == 12 ? 1 : month + 1;
+        LocalDate endDate = LocalDate.of(year, nextMonth, 1);
+        List<Expense> expenses = expenseRepository.findByUserIdAndDateBetween(user.getId(), startDate, endDate); 
+        List<ExpenseResponse> response = new ArrayList();
+
+        if (expenses.isEmpty()) {
+            System.out.println("No expenses retrieved for the given month");
+            return response;
+        }
+
+        response = expenses.stream()
+            .map(expense -> new ExpenseResponse(
+                expense.getId(),
+                expense.getName(),
+                expense.getAmount(),
+                expense.getDescription(),
+                expense.getCategory(),
+                expense.getDate()
+            )).toList();
+
+        System.out.println("All expenses retrived for the given month");
 
         return response;
     }
